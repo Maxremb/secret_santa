@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SecretsantaApplication<secretsanta>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.maxrmeb.secretsanta.secretsanta.SecretsantaApplication",
+            "projectName": "secretsanta",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
