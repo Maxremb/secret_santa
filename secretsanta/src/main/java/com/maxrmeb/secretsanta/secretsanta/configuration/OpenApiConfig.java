@@ -1,0 +1,19 @@
+package com.maxrmeb.secretsanta.secretsanta.configuration;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+
+@Configuration
+public class OpenApiConfig {
+ @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+            .info(new Info()
+                .title("API - Secret Santa")
+                .version("v1")
+                .description("Documentation OpenAPI générée par springdoc-openapi"));
+    }
+}
