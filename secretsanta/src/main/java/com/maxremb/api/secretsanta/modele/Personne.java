@@ -1,4 +1,4 @@
-package com.maxrmeb.secretsanta.secretsanta.modele;
+package com.maxremb.api.secretsanta.modele;
 
 public class Personne {
 

@@ -1,4 +1,4 @@
-package com.maxrmeb.secretsanta.secretsanta.configuration;
+package com.maxremb.api.secretsanta.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,12 +1,10 @@
-package com.maxrmeb.secretsanta.secretsanta;
+package com.maxremb.api.secretsanta;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.maxrmeb.secretsanta.secretsanta", "controller"})
 public class SecretsantaApplication {
 
 	public static void main(String[] args) {

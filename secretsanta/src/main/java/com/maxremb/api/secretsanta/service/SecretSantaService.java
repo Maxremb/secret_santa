@@ -1,6 +1,5 @@
-package com.maxrmeb.secretsanta.secretsanta.service;
+package com.maxremb.api.secretsanta.service;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +10,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.maxrmeb.secretsanta.secretsanta.modele.MailMessage;
-import com.maxrmeb.secretsanta.secretsanta.modele.Personne;
+import com.maxremb.api.secretsanta.modele.MailMessage;
+import com.maxremb.api.secretsanta.modele.Personne;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,15 +33,25 @@ public class SecretSantaService {
 
             for(int i =0; i < mapSecretSanta.size(); i++) {
                 SimpleMailMessage msg = new SimpleMailMessage();
-                
+
                 // On Récupère l'expéditeur et le destinataire
                 Personne sender = (Personne) mapSecretSanta.keySet().toArray()[i];
                 Personne receiver = mapSecretSanta.get(sender);
 
                 // Construction du message
                 msg.setTo( sender.getEmail()) ; 
-                msg.setSubject( "Secret santa is coming !!" );
-                msg.setText( "Votre secret santa sera " + receiver.getNom() + ". N'oubliez pas de lui faire un cadeau !" );
+                if (mailMessage.getSujet() == null || mailMessage.getSujet().isEmpty()){
+                    msg.setSubject( "Secret santa is coming !!" );
+                } else {
+                    msg.setSubject( mailMessage.getSujet() );
+                }
+                if (mailMessage.getCorps() == null || mailMessage.getCorps().isEmpty()){
+                    msg.setText( "Votre secret santa sera " + receiver.getNom() + ". N'oubliez pas de lui faire un cadeau !" );
+                } else {
+                    msg.setText(mailMessage.getCorps());
+                    // MRE : faire du vrai templating avec remplacement des variables
+                }
+                javaMailSender.send(msg);
 
                 // Envoyer l'email à sender.getEmail() avec le sujet et le corps personnalisé
                 log.info("Envoi de l'email à " + sender.getEmail() + " pour le destinataire " + receiver.getNom());
