@@ -30,9 +30,9 @@ public class SecretSantaServiceTest {
 
         Assert.isTrue(result.size() == 3, "Le nombre d'assignations doit être égal au nombre de personnes");
         Assert.isTrue(result.keySet().stream().allMatch(k -> !k.equals(result.get(k))), "Personne ne doit s'assigner lui-même");
-        Assert.isTrue(result.get(alice) != null, "Alice doit avoir un Secret Santa assigné");
-        Assert.isTrue(result.get(bob) != null, "Bob doit avoir un Secret Santa assigné");
-        Assert.isTrue(result.get(charlie) != null, "Charlie doit avoir un Secret Santa assigné");
+        Assert.isTrue(result.get(alice) != null && result.get(alice) != alice, "Alice doit avoir un Secret Santa assigné");
+        Assert.isTrue(result.get(bob) != null && result.get(bob) != bob, "Bob doit avoir un Secret Santa assigné");
+        Assert.isTrue(result.get(charlie) != null && result.get(charlie) != charlie, "Charlie doit avoir un Secret Santa assigné");
     }
 
     public void sendSMSTest() throws Exception {

@@ -3,8 +3,7 @@ package com.maxremb.api.secretsanta.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
-
+import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -49,12 +48,12 @@ public class SecretSantaService {
                     msg.setText( "Votre secret santa sera " + receiver.getNom() + ". N'oubliez pas de lui faire un cadeau !" );
                 } else {
                     msg.setText(mailMessage.getCorps());
-                    // MRE : faire du vrai templating avec remplacement des variables
+                    // TODO MRE : faire du vrai templating avec remplacement des variables
                 }
                 javaMailSender.send(msg);
 
                 // Envoyer l'email à sender.getEmail() avec le sujet et le corps personnalisé
-                log.info("Envoi de l'email à " + sender.getEmail() + " pour le destinataire " + receiver.getNom());
+                log.debug("Envoi de l'email à " + sender.getEmail() + " pour le destinataire " + receiver.getNom());
             }
 
             return true; // Retourne true si l'email a été envoyé avec succès
@@ -93,23 +92,23 @@ public class SecretSantaService {
             return false;
         }
     }
-
-    // MRE : Passer méthode en privée une fois testé
+    
+    /*
+    * On assigne une personne différente à chacun des participants
+    */
     public Map<Personne, Personne> assignSecretSantas( List<Personne> peoples ){
         HashMap<Personne, Personne> assignments = new HashMap<>();
+        
+        // On rend la liste aléatoire
+        Collections.shuffle(peoples);
+        
+        // On assigne le donneur et receveur
+        for(int i = 0; i < peoples.size(); i++) {
+            Personne giver = peoples.get(i);
+            Personne receiver = peoples.get((i + 1) % peoples.size());
+            assignments.put(giver, receiver);
+        }
 
-        /*
-         * On assigne une personne différente à chacun des participants
-         */
-
-        peoples.stream().forEach(person -> {
-            Personne assigned;
-            do {
-                int randomIndex = (int) (ThreadLocalRandom.current().nextDouble() * peoples.size());
-                assigned = peoples.get(randomIndex);
-            } while (assigned.equals(person) || assignments.containsValue(assigned));
-            assignments.put(person, assigned);
-        });
         return assignments; 
     }
 }
